@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #eef2f3;
+            font-family: 'Roboto', sans-serif;
+        }
+        form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Added padding for better spacing */
+            max-width: 400px;
+            width: 100%;
+            display: grid;
+            grid-gap: 15px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 5px; /* Added margin for spacing */
+        }
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            width: 100%; /* Full width for inputs */
+            box-sizing: border-box; /* Ensures padding is included in width */
+        }
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        textarea {
+            resize: none; /* Prevent resizing */
+            height: 80px; /* Fixed height for textarea */
+        }
+        button,
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align:center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 30%; /* Make buttons take up equal space */
+        }
+        button:hover,
+        .back-button:hover {
+            background-color: #45a049;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* Equal spacing between buttons */
+        }
+        .back-button {
+            background-color: #f44336; /* Red color for back button */
+        }
+        .back-button:hover {
+            background-color: #e53935; /* Darker red */
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <h1>Add Task</h1>
+
+        <div>
+            <label for="taskname">Task Name:</label>
+            <input type="text" id="taskname" name="taskname" placeholder="Task Name" required>
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" placeholder="Description" required></textarea>
+        </div>
+
+        <div>
+            <label for="date">Start Date:</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+
+        <div>
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority" required>
+                <option value="" disabled selected>Select Priority</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+        </div>
+        <div>
+        <label for="status">Completed:</label>
+    <input type="checkbox" id="status" name="status"><br>
+</div>
+        <div class="button-container">
+            <a href="/" class="back-button">Back to Home</a>
+            <button type="submit">Add Task</button>
+
+        </div>
+    </form>
+</body>
+</html>

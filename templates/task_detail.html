@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            background-color: #eef2f3;
+            font-family: 'Roboto', sans-serif;
+        }
+        .task-detail-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            margin: 20px 0;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px; /* Add spacing below the title */
+        }
+        .task-info {
+            margin: 10px 0;
+            line-height: 1.6; /* Improve line spacing for readability */
+            max-width: 100%; /* Prevent overflow */
+            overflow-wrap: break-word; /* Allow long words to break to the next line */
+        }
+
+
+        .back-button {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block; /* Align button */
+            margin-top: 20px; /* Add space above the button */
+        }
+        .back-button:hover {
+            background-color: #1976D2;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+            margin-top: 10px; /* Add space above status label */
+        }
+        .ongoing {
+            background-color: #2196F3; /* Blue for ongoing tasks */
+        }
+        .completed {
+            background-color: #4CAF50; /* Green for completed tasks */
+        }
+    </style>
+</head>
+<body>
+    <div class="task-detail-container">
+        <h1>Task Details</h1>
+        <div class="task-info">
+            <strong>Task Name:</strong> {{ task.taskname }}<br>
+            <strong>Due Date:</strong> {{ task.date }}<br>
+            <strong>Description:</strong><br>
+            <p style="margin: 0;">{{ task.description }}</p> <!-- Added paragraph for description -->
+            <strong>Priority:</strong> {{ task.priority }}<br>
+            <strong>Status:</strong>
+            <span class="status {% if task.status %}completed{% else %}ongoing{% endif %}">
+                {% if task.status %}Completed{% else %}Ongoing{% endif %}
+            </span>
+        </div>
+        <a href="/" class="back-button">Back to To-Do List</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #eef2f3;
+            font-family: 'Roboto', sans-serif;
+        }
+        h1 {
+            margin: 20px 0;
+            color: #333;
+        }
+        .task-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .task {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-details {
+            flex-grow: 1; /* Allow details to take available space */
+            margin-right: 15px; /* Spacing between details and buttons */
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+        }
+        .ongoing {
+            margin: 2px;
+            background-color: #2196F3; /* Blue for ongoing tasks */
+        }
+        .completed {
+            margin-top : 2px;
+            background-color: #4CAF50; /* Green for completed tasks */
+        }
+        .edit-button, .delete-button, .view-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 14px;
+            margin-right: 5px; /* Added margin for button spacing */
+        }
+        .edit-button:hover, .delete-button:hover, .view-button:hover {
+            background-color: #45a049;
+        }
+        .add-task-button {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        .add-task-button:hover {
+            background-color: #1976D2;
+        }
+        .back-button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <a href="/add" class="add-task-button">Add Task</a>
+    </form><br>
+
+    {% for i in tasks %}
+<div class="task-container">
+    <div class="task">
+        <div class="task-details">
+            <strong>Task Name:</strong> {{ i.id }}<br>
+            <strong>Task Name:</strong> {{ i.taskname }}<br>
+            <strong>Due Date:</strong> {{ i.date }}<br>
+            <strong>Priority:</strong> {{ i.priority }}<br><br>
+            <span class="status {% if i.status %}completed{% else %}ongoing{% endif %}">
+                {% if i.status %}Completed{% else %}Ongoing{% endif %}
+            </span>
+        </div>
+        <div>
+<!--            <input type="checkbox" id="task-status" name="status" {% if i.status %}checked{% endif %} onclick="toggleStatus(this)">-->
+<!--            <label for="task-status">Complete</label>-->
+            <a href="{% url 'task_detail' i.id %}" class="view-button">View</a>
+            <a href="{% url 'update' i.id %}" class="edit-button">Edit</a> <!-- Updated link -->
+            <a href="{% url 'delete' i.id %}" class="edit-button" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+    <script>
+        function toggleStatus(checkbox) {
+            const taskStatus = checkbox.checked;
+            const statusLabel = checkbox.parentElement.previousElementSibling.querySelector('.status');
+
+            if (taskStatus) {
+                statusLabel.textContent = 'Completed';
+                statusLabel.classList.remove('ongoing');
+                statusLabel.classList.add('completed');
+            } else {
+                statusLabel.textContent = 'Ongoing';
+                statusLabel.classList.remove('completed');
+                statusLabel.classList.add('ongoing');
+            }
+        }
+    </script>
+</body>
+</html>
